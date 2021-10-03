@@ -10,26 +10,23 @@ function submit() {
     const valX = $("#x_arg").val();
     const valR = $("#r_arg").val();
     if (checkY(valY)) {
-        $.get('php/main.php', {
+        $.get('/filter', {
             'x': valX,
             'y': valY,
             'r': valR
-        }).done(function(data) {
+        }).done(function (data) {
+            console.log(data);
             arr = JSON.parse(data);
-            if (arr.err_msg == '') {
-                row = '<tr>';
-                row += '<td><b>' + arr.x + '</b></td>';
-                row += '<td><b>' + arr.y + '</b></td>';
-                row += '<td><b>' + arr.r + '</b></td>';
-                row += '<td><b>' + arr.check + '</b></td>';
-                row += '<td><b>' + arr.exec_time + '</b></td>';
-                row += '<td><b>' + arr.time + '</b></td>';
-                row += '</tr>';
-                $('#history-table tr:first').after(row);
-            } else {
-                alert(err_msg);
-            }
-        }).fail(function(err) {
+            row = '<tr>';
+            row += '<td><b>' + arr.x + '</b></td>';
+            row += '<td><b>' + arr.y + '</b></td>';
+            row += '<td><b>' + arr.r + '</b></td>';
+            row += '<td><b>' + arr.check + '</b></td>';
+            row += '<td><b>' + arr.exec_time + '</b></td>';
+            row += '<td><b>' + arr.time + '</b></td>';
+            row += '</tr>';
+            $('#history-table tr:first').after(row);
+        }).fail(function (err) {
             alert(err)
         });
     } else {
@@ -38,8 +35,9 @@ function submit() {
 }
 
 function clear_table() {
-    $.get('php/clear.php')
-        .fail(function(err) {
+    $.get('/filter', {
+        'clear' : true
+    }).fail(function (err) {
             alert('Что-то пошло не так!')
         });
 
