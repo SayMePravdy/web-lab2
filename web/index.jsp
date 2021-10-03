@@ -1,3 +1,8 @@
+<%@ page import="app.entity.HitsBean" %>
+<%@ page import="app.entity.Hit" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.text.NumberFormat" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -60,8 +65,8 @@
 </div>
 
 <div class="submitter">
-    <button id="submit_button" type="submit" onclick="submit()" formmethod="get" formaction="index.html">Отправить
-    </button>
+    <button id="submit_button" type="submit" onclick="submit()" >Отправить</button>
+    <button id="clear_button" type="submit" onclick="clear_table()" >Очистить историю</button>
 </div>
 
 <div>
@@ -91,6 +96,26 @@
                 <b>Текущее время</b>
             </td>
         </tr>
+        <%
+            HitsBean bean = (HitsBean) request.getSession().getAttribute("hits");
+            if (bean != null) {
+                List<Hit> hits = bean.getHits();;
+                for (int i = hits.size() - 1; i >= 0; i--) {
+                    out.println("<tr>");
+                    double x =  hits.get(i).getX();
+                    double y =  hits.get(i).getY();
+                    double r =  hits.get(i).getR();
+                    NumberFormat nf = new DecimalFormat("#.########");
+                    out.println("<td><b>" + nf.format(x).replace(",", ".") + "</b></td>");
+                    out.println("<td><b>" + nf.format(y).replace(",", ".") + "</b></td>");
+                    out.println("<td><b>" + nf.format(r).replace(",", ".") + "</b></td>");
+                    out.println("<td><b>" + hits.get(i).isCheckHit() + "</b></td>");
+                    out.println("<td><b>" + hits.get(i).getExecTime() + "</b></td>");
+                    out.println("<td><b>" + hits.get(i).getLocalDateTime() + "</b></td>");
+                    out.println("</tr>");
+                }
+            }
+        %>
     </table>
 </div>
 
