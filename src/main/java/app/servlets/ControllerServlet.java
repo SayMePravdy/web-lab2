@@ -16,7 +16,8 @@ public class ControllerServlet extends HttpServlet {
                 request.getParameter("r") != null) {
             getServletContext().getNamedDispatcher("AreaCheckServlet").forward(request, response);
         } else {
-            if (request.getParameter("clear").equals("true")) {
+            String clear = request.getParameter("clear");
+            if (clear != null && clear.equals("true")) {
                 getServletContext().getNamedDispatcher("ClearTableServlet").forward(request, response);
             } else {
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);

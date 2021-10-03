@@ -1,4 +1,3 @@
-<%@ page import="app.entity.HitsBean" %>
 <%@ page import="app.entity.Hit" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.DecimalFormat" %>
@@ -97,9 +96,8 @@
             </td>
         </tr>
         <%
-            HitsBean bean = (HitsBean) request.getSession().getAttribute("hits");
-            if (bean != null) {
-                List<Hit> hits = bean.getHits();;
+            List<Hit> hits = (List<Hit>) request.getSession().getAttribute("hits");
+            if (hits != null) {
                 for (int i = hits.size() - 1; i >= 0; i--) {
                     out.println("<tr>");
                     double x =  hits.get(i).getX();
@@ -110,7 +108,7 @@
                     out.println("<td><b>" + nf.format(y).replace(",", ".") + "</b></td>");
                     out.println("<td><b>" + nf.format(r).replace(",", ".") + "</b></td>");
                     out.println("<td><b>" + hits.get(i).isCheckHit() + "</b></td>");
-                    out.println("<td><b>" + hits.get(i).getExecTime() + "</b></td>");
+                    out.println("<td><b>" + nf.format(hits.get(i).getExecTime()).replace(",", ".") + "</b></td>");
                     out.println("<td><b>" + hits.get(i).getLocalDateTime() + "</b></td>");
                     out.println("</tr>");
                 }

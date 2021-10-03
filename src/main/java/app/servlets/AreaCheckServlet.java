@@ -1,7 +1,6 @@
 package app.servlets;
 
 import app.entity.Hit;
-import app.entity.HitsBean;
 import app.exception.HitParserException;
 
 import javax.servlet.ServletException;
@@ -11,9 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,13 +24,13 @@ public class AreaCheckServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             Hit hit = getHit(request, startTime);
-            HitsBean bean = (HitsBean) request.getSession().getAttribute("hits");
-            if (bean == null) {
-                bean = new HitsBean(Stream.of(hit).collect(Collectors.toList()));
+            List<Hit> hits = (List<Hit>) request.getSession().getAttribute("hits");
+            if (hits == null) {
+                hits = Stream.of(hit).collect(Collectors.toList());
             } else {
-                bean.add(hit);
+                hits.add(hit);
             }
-            request.getSession().setAttribute("hits", bean);
+            request.getSession().setAttribute("hits", hits);
             out.println(hit.toJson());
         } catch (HitParserException e) {
             e.printStackTrace();
