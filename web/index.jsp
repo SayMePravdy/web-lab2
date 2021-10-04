@@ -2,7 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.text.NumberFormat" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html>
@@ -64,8 +64,13 @@
 </div>
 
 <div class="submitter">
-    <button id="submit_button" type="submit" onclick="submit()" >Отправить</button>
-    <button id="clear_button" type="submit" onclick="clear_table()" >Очистить историю</button>
+    <audio controls id="sound1" src="sounds/Pivo_sound_last.mp3" hidden="true"></audio>
+    <audio controls id="sound2" src="sounds/otkryvajut-banku-s-pivom.mp3" hidden="true"></audio>
+    <button id="submit_button" type="submit" onclick="document.getElementById('sound1').play();submit();">Отправить
+    </button>
+    <button id="clear_button" type="submit" onclick="document.getElementById('sound2').play();clear_table();">Очистить
+        историю
+    </button>
 </div>
 
 <div>
@@ -100,9 +105,9 @@
             if (hits != null) {
                 for (int i = hits.size() - 1; i >= 0; i--) {
                     out.println("<tr>");
-                    double x =  hits.get(i).getX();
-                    double y =  hits.get(i).getY();
-                    double r =  hits.get(i).getR();
+                    double x = hits.get(i).getX();
+                    double y = hits.get(i).getY();
+                    double r = hits.get(i).getR();
                     NumberFormat nf = new DecimalFormat("#.########");
                     out.println("<td><b>" + nf.format(x).replace(",", ".") + "</b></td>");
                     out.println("<td><b>" + nf.format(y).replace(",", ".") + "</b></td>");

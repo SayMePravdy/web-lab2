@@ -115,6 +115,11 @@ span {
     text-align: center;
 }
 
+/*audio {*/
+/*    height: 0;*/
+/*    width: 0;*/
+/*}*/
+
 span > label {
     margin: 15px;
     text-align: center;

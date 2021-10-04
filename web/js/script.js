@@ -15,7 +15,6 @@ function submit() {
             'y': valY,
             'r': valR
         }).done(function (data) {
-            console.log(data);
             arr = JSON.parse(data);
             row = '<tr>';
             row += '<td><b>' + arr.x + '</b></td>';
