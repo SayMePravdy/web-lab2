@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 
-<body>
+<body onload="canvasInit()">
 <div class="header">
     <b>
         <span id="left-header">Соснило Михаил Александрович P3213 </span>
@@ -23,7 +23,9 @@
 
 <div id="box">
     <div class="arg">
-        <img src='img/task.png'>
+        <%--        <img id="pic" src='img/task.png'>--%>
+        <canvas id="chart" width="300px" height="300px">
+        </canvas>
     </div>
     <div class="arg">
             <span>
@@ -52,23 +54,21 @@
             <span>
 					<label for='r_arg'><b>Введите R:</b></label>
 					<br>
-					<select id='r_arg'>
+					<select id='r_arg' onchange="changeR()">
 						<option name="r" value="1">1</option>
 						<option name="r" value="2">2</option>
 						<option name="r" value="3">3</option>
 						<option name="r" value="4">4</option>
-						<option name="r" value="5">5</option>
+						<option name="r" value="5" selected="selected">5</option>
 					</select>
 				</span>
     </div>
 </div>
 
 <div class="submitter">
-    <audio controls id="sound1" src="sounds/Pivo_sound_last.mp3" hidden="true"></audio>
-    <audio controls id="sound2" src="sounds/otkryvajut-banku-s-pivom.mp3" hidden="true"></audio>
-    <button id="submit_button" type="submit" onclick="document.getElementById('sound1').play();submit();">Отправить
+    <button id="submit_button" type="submit" onclick="submit()">Отправить
     </button>
-    <button id="clear_button" type="submit" onclick="document.getElementById('sound2').play();clear_table();">Очистить
+    <button id="clear_button" type="submit" onclick="clear_table()">Очистить
         историю
     </button>
 </div>
@@ -123,6 +123,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/canvas.js"></script>
 <script src="js/script.js"></script>
 </body>
 

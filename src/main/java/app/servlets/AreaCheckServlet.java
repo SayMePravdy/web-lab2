@@ -1,7 +1,6 @@
 package app.servlets;
 
 import app.entity.Hit;
-import app.exception.HitParserException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,9 +31,6 @@ public class AreaCheckServlet extends HttpServlet {
             }
             request.getSession().setAttribute("hits", hits);
             out.println(hit.toJson());
-        } catch (HitParserException e) {
-            e.printStackTrace();
-            out.println(e.getMessage());
         } catch (NumberFormatException e) {
             e.printStackTrace();
             out.println("Incorrect coordinates type");
@@ -43,33 +39,15 @@ public class AreaCheckServlet extends HttpServlet {
         }
     }
 
-    private Hit getHit(HttpServletRequest request, long startTime) throws NumberFormatException, HitParserException {
+    private Hit getHit(HttpServletRequest request, long startTime) throws NumberFormatException {
         double x = Double.parseDouble(request.getParameter("x"));
         double y = Double.parseDouble(request.getParameter("y"));
         double r = Double.parseDouble(request.getParameter("r"));
-        String errMsg = validate(x, y, r);
-        if (errMsg.isEmpty()) {
-            String currentTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
-            boolean checkHit = checkHit(x, y, r);
-            return new Hit(x, y, r, currentTime, checkHit ? "Да" : "Нет",
-                    (System.nanoTime() - startTime) / 1000000000d);
-        } else {
-            throw new HitParserException(errMsg);
-        }
-    }
 
-    private String validate(double x, double y, double r) {
-        String errorMsg = "";
-        if (x < -3 || x > 5) {
-            errorMsg += "X должен лежать в отрезке [-3;5]\n";
-        }
-        if (y <= -5 || y >= 5) {
-            errorMsg += "Y должен лежать в интервале (-5;5)\n";
-        }
-        if (r < 1 || r > 5) {
-            errorMsg += "R должен лежать в отрезке [1;5]\n";
-        }
-        return errorMsg;
+        String currentTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        boolean checkHit = checkHit(x, y, r);
+        return new Hit(x, y, r, currentTime, checkHit ? "Да" : "Нет",
+                (System.nanoTime() - startTime) / 1000000000d);
     }
 
     private boolean checkHit(double x, double y, double r) {
