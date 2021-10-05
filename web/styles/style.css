@@ -9,19 +9,16 @@ body {
 .header {
     margin: 20px;
     font-style: italic;
-    /* border: 5px solid gray; */
     height: 100px;
     font-size: 60px;
     color: rgb(83, 83, 83);
-    /* background-color: rgb(20, 153, 71); */
-    /* text-align: center; */
 }
 
 #history-table {
     font-size: 18px;
     width: 100%;
     text-align: center;
-    margin-top: 80px;
+    margin-top: 60px;
     color: rgb(73, 73, 73);
     background-color: rgb(255, 239, 220, 0.75);
 }
@@ -31,7 +28,7 @@ td > b {
 }
 
 .submitter {
-    margin-top: 100px;
+    margin-top: 70px;
     text-align: center;
 }
 
@@ -67,7 +64,7 @@ td > b {
 }
 
 #box {
-    margin-top: 70px;
+    margin-top: 50px;
     font-size: 25px;
     display: flex;
     justify-content: space-around;

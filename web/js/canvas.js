@@ -87,12 +87,18 @@ function drawAxis() {
 function drawShoot(x, y, isHit) {
     let canvas = document.getElementById('chart');
     let chart = canvas.getContext('2d');
-    let color = isHit === 'Да' ? 'green' : 'red';
+    console.log(isHit, '2');
+    let color;
+    if (isHit === 'Да') {
+        color = 'green';
+    } else {
+        color = 'red';
+    }
     chart.beginPath();
     chart.arc(x, y, dash, 0, Math.PI * 2);
     chart.fillStyle = color;
     chart.strokeStyle = color;
-    chart.globalAlpha = 0.6;
+    chart.globalAlpha = 0.45;
     chart.fill();
     chart.stroke();
 }
@@ -101,4 +107,18 @@ function canvasInit() {
     let canvas = document.getElementById('chart');
     canvas.addEventListener('mousedown', event => clickOnChart(canvas, event));
     drawAxis();
+}
+
+function mapCoordinates(x, y) {
+    let canvas = document.getElementById('chart');
+    let width = canvas.width;
+    let height = canvas.height;
+    return new Coordinates(width / 2 + x * scale, height / 2 - y * scale);
+}
+
+class Coordinates {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
 }
