@@ -1,8 +1,7 @@
-<%@ page import="app.entity.Hit" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.text.DecimalFormat" %>
-<%@ page import="java.text.NumberFormat" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -100,25 +99,57 @@
                 <b>Текущее время</b>
             </td>
         </tr>
-        <%
-            List<Hit> hits = (List<Hit>) request.getSession().getAttribute("hits");
-            if (hits != null) {
-                for (int i = hits.size() - 1; i >= 0; i--) {
-                    out.println("<tr>");
-                    double x = hits.get(i).getX();
-                    double y = hits.get(i).getY();
-                    double r = hits.get(i).getR();
-                    NumberFormat nf = new DecimalFormat("#.########");
-                    out.println("<td><b>" + nf.format(x).replace(",", ".") + "</b></td>");
-                    out.println("<td><b>" + nf.format(y).replace(",", ".") + "</b></td>");
-                    out.println("<td><b>" + nf.format(r).replace(",", ".") + "</b></td>");
-                    out.println("<td><b>" + hits.get(i).isCheckHit() + "</b></td>");
-                    out.println("<td><b>" + nf.format(hits.get(i).getExecTime()).replace(",", ".") + "</b></td>");
-                    out.println("<td><b>" + hits.get(i).getLocalDateTime() + "</b></td>");
-                    out.println("</tr>");
-                }
-            }
-        %>
+        <c:set var="startIndex" value="${fn: length (hits) -1}"> </c:set>
+        <%--@elvariable id="hits" type="java.util.List"--%>
+        <c:forEach var="hit" items="${hits}" varStatus="status">
+            <tr>
+                <td><b>
+                    <fmt:formatNumber type="number" pattern="#.########" value="${hits[startIndex-status.index].x}"
+                                      var="pat"/>
+                        ${fn:replace(pat, ",", ".")}
+                </b></td>
+                <td><b>
+                    <fmt:formatNumber type="number" pattern="#.########" value="${hits[startIndex-status.index].y}"
+                                      var="pat"/>
+                        ${fn:replace(pat, ",", ".")}
+                </b></td>
+                <td><b>
+                    <fmt:formatNumber type="number" pattern="#.########" value="${hits[startIndex-status.index].r}"
+                                      var="pat"/>
+                        ${fn:replace(pat, ",", ".")}
+                </b></td>
+                <td><b>
+                        ${hits[startIndex-status.index].checkHit}
+                </b></td>
+                <td><b>
+                    <fmt:formatNumber type="number" pattern="#.########"
+                                      value="${hits[startIndex-status.index].execTime}" var="pat"/>
+                        ${fn:replace(pat, ",", ".")}
+                </b></td>
+                <td><b>
+                        ${hits[startIndex-status.index].localDateTime}
+                </b></td>
+            </tr>
+        </c:forEach>
+        <%--        <%--%>
+        <%--            List<Hit> hits = (List<Hit>) request.getSession().getAttribute("hits");--%>
+        <%--            if (hits != null) {--%>
+        <%--                for (int i = hits.size() - 1; i >= 0; i--) {--%>
+        <%--                    out.println("<tr>");--%>
+        <%--                    double x = hits.get(i).getX();--%>
+        <%--                    double y = hits.get(i).getY();--%>
+        <%--                    double r = hits.get(i).getR();--%>
+        <%--                    NumberFormat nf = new DecimalFormat("#.########");--%>
+        <%--                    out.println("<td><b>" + nf.format(x).replace(",", ".") + "</b></td>");--%>
+        <%--                    out.println("<td><b>" + nf.format(y).replace(",", ".") + "</b></td>");--%>
+        <%--                    out.println("<td><b>" + nf.format(r).replace(",", ".") + "</b></td>");--%>
+        <%--                    out.println("<td><b>" + hits.get(i).isCheckHit() + "</b></td>");--%>
+        <%--                    out.println("<td><b>" + nf.format(hits.get(i).getExecTime()).replace(",", ".") + "</b></td>");--%>
+        <%--                    out.println("<td><b>" + hits.get(i).getLocalDateTime() + "</b></td>");--%>
+        <%--                    out.println("</tr>");--%>
+        <%--                }--%>
+        <%--            }--%>
+        <%--        %>--%>
     </table>
 </div>
 

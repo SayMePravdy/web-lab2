@@ -23,7 +23,7 @@ public class Hit {
         return localDateTime;
     }
 
-    public String isCheckHit() {
+    public String getCheckHit() {
         return checkHit;
     }
 
